@@ -22,26 +22,16 @@
  * SOFTWARE.
  * 
  */
+package info.vishrantgupta.chatbot.db.repository;
 
-package info.vishrantgupta.chatbot.conf;
+import info.vishrantgupta.chatbot.db.entity.ChatbotData;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.cassandra.repository.CassandraRepository;
 
 /**
  * @author Vishrant Gupta
  *
  */
-@ComponentScan("info.vishrantgupta.chatbot")
-@EnableAutoConfiguration
-@SpringBootApplication
-@PropertySource("classpath:application.yml")
-public class AppServer {
+public interface ChatbotDataRepository extends CassandraRepository<ChatbotData, ChatbotData> {
 
-	public static void main(String[] args) throws Exception {
-		SpringApplication.run(AppServer.class, args);
-	}
 }

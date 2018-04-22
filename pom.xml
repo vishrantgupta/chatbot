@@ -24,6 +24,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<alicebot.version>4.0.4-SNAPSHOT</alicebot.version>
+		<cassandra.version>2.1.9.2</cassandra.version>
+		<hector.version>2.0-0</hector.version>
 	</properties>
 
 	<parent>
@@ -39,16 +41,39 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!-- chatbot dependency -->
 		<dependency>
 			<groupId>org.alicebot.ab</groupId>
 			<artifactId>ab</artifactId>
 			<version>${alicebot.version}</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-cassandra -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-cassandra</artifactId>
+		</dependency>
+
+		<!-- <dependency> <groupId>org.cassandraunit</groupId> <artifactId>cassandra-unit-spring</artifactId> 
+			<version>${cassandra.version}</version> <scope>test</scope> <exclusions> 
+			<exclusion> <groupId>org.cassandraunit</groupId> <artifactId>cassandra-unit</artifactId> 
+			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.cassandraunit</groupId> 
+			<artifactId>cassandra-unit-shaded</artifactId> <version>${cassandra.version}</version> 
+			<scope>test</scope> </dependency> <dependency> <groupId>org.hectorclient</groupId> 
+			<artifactId>hector-core</artifactId> <version>${hector.version}</version> 
+			</dependency> -->
+		<!-- embedded cassandra dependency ends -->
+
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
@@ -66,7 +91,19 @@
 		</repository>
 	</repositories>
 
-
-
-
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>info.vishrantgupta.chatbot.conf.AppServer</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
