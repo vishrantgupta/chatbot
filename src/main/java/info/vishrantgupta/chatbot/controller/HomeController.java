@@ -22,28 +22,21 @@
  * SOFTWARE.
  * 
  */
+package info.vishrantgupta.chatbot.controller;
 
-package info.vishrantgupta.chatbot.conf;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Vishrant Gupta
  *
  */
-@Configuration
-@ComponentScan("info.vishrantgupta.chatbot")
-@EnableAutoConfiguration
-@SpringBootApplication
-@PropertySource("classpath:application.yml")
-public class AppServer {
+@RestController
+public class HomeController {
 
-	public static void main(String[] args) throws Exception {
-		SpringApplication.run(AppServer.class, args);
+	@RequestMapping("/")
+	public String home() {
+		return "Hello from chatbot";
 	}
+
 }
