@@ -22,27 +22,37 @@
  * SOFTWARE.
  * 
  */
+package info.vishrantgupta.chatbot.controller;
 
-package info.vishrantgupta.chatbot.conf;
+import info.vishrantgupta.chatbot.model.AIMLModel;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Vishrant Gupta
  *
  */
-//@Configuration
-@ComponentScan("info.vishrantgupta.chatbot")
-@EnableAutoConfiguration
-@SpringBootApplication
-@PropertySource("classpath:application.yml")
-public class AppServer {
+@RestController
+// @RequestMapping(value="/bot")
+public class ChatbotController {
 
-	public static void main(String[] args) throws Exception {
-		SpringApplication.run(AppServer.class, args);
+	@RequestMapping(value = "train")
+	public void trainChatbot(
+			@RequestParam(required = true, defaultValue = "{}") AIMLModel trainData) {
+
+		if (trainData != null) {
+
+		}
+
 	}
+
+	@RequestMapping(value = "chat")
+	public ResponseEntity<?> chat() {
+
+		return ResponseEntity.ok("success");
+	}
+
 }

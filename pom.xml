@@ -23,6 +23,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<alicebot.version>4.0.4-SNAPSHOT</alicebot.version>
 	</properties>
 
 	<parent>
@@ -39,9 +40,33 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.alicebot.ab</groupId>
+			<artifactId>ab</artifactId>
+			<version>${alicebot.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+
+	<repositories>
+		<repository>
+			<id>soluvas-public-snapshots</id>
+			<url>http://nexus.bippo.co.id/nexus/content/repositories/soluvas-public-snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+
+
+
 </project>
