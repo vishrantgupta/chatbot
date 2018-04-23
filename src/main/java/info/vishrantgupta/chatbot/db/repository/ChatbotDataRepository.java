@@ -26,12 +26,16 @@ package info.vishrantgupta.chatbot.db.repository;
 
 import info.vishrantgupta.chatbot.db.entity.ChatbotData;
 
-import org.springframework.data.cassandra.repository.CassandraRepository;
+//import org.springframework.data.cassandra.repository.CassandraRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Vishrant Gupta
  *
  */
-public interface ChatbotDataRepository extends CassandraRepository<ChatbotData, ChatbotData> {
+@Repository
+public interface ChatbotDataRepository extends
+		CrudRepository<ChatbotData, ChatbotData> {
 
 }

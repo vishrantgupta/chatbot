@@ -32,6 +32,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
+import org.springframework.data.cassandra.config.SchemaAction;
 import org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification;
 import org.springframework.data.cassandra.core.cql.keyspace.KeyspaceOption;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
@@ -62,6 +63,11 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
 				.withSimpleReplication());
 	}
 
+	@Override
+	public SchemaAction getSchemaAction() {
+		return SchemaAction.CREATE_IF_NOT_EXISTS;
+	}
+
 	/*
 	 * Creating keyspace if does not exists
 	 */
@@ -70,7 +76,7 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
 		return Collections.singletonList("CREATE KEYSPACE IF NOT EXISTS "
 				+ keyspaceName + " WITH replication = {"
 				+ " 'class': 'SimpleStrategy', "
-				+ " 'replication_factor': '3' " + "};");
+				+ " 'replication_factor': '1' " + "};");
 
 	}
 }

@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,68 +20,43 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
+ * 
  */
-package info.vishrantgupta.chatbot.model;
+package info.vishrantgupta.chatbot.service;
 
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
+import info.vishrantgupta.chatbot.db.entity.ChatbotData;
+import info.vishrantgupta.chatbot.db.repository.ChatbotDataRepository;
+import info.vishrantgupta.chatbot.mapper.ChatbotDataMapper;
+import info.vishrantgupta.chatbot.model.AIMLModel;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Vishrant Gupta
  *
  */
 
-@Table
-public class AIMLModel {
+@Service
+public class TrainingDataServiceImpl implements TrainingDataService {
 
-	@PrimaryKey
-	private int id;
-	
-	private Category category;
+	@Autowired
+	private ChatbotDataRepository chatbotDataRepository;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		AIMLModel other = (AIMLModel) obj;
-		if (this.category == null) {
-			if (other.category != null) {
-				return false;
-			}
-		} else if (!this.category.equals(other.category)) {
-			return false;
-		}
-		return true;
-	}
-
-	public Category getCategory() {
-		return this.category;
-	}
+	@Autowired
+	private ChatbotDataMapper chatbotDataMapper;
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((this.category == null) ? 0 : this.category.hashCode());
-		return result;
-	}
+	public AIMLModel save(AIMLModel trainingData) {
 
-	public void setCategory(Category category) {
-		this.category = category;
-	}
+		ChatbotData chatbotData = chatbotDataMapper
+				.AIML2CassandraEntityMapper(trainingData);
 
-	@Override
-	public String toString() {
-		return "AIML [category=" + this.category + "]";
+		ChatbotData saved = chatbotDataRepository.save(chatbotData);
+
+		AIMLModel aiml = chatbotDataMapper.CassandraEntity2AIMLMapper(saved);
+
+		return aiml;
 	}
 
 }

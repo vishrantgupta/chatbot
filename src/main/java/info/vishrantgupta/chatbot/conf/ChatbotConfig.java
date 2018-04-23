@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,68 +20,46 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
+ * 
  */
-package info.vishrantgupta.chatbot.model;
+package info.vishrantgupta.chatbot.conf;
 
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
+import java.io.Serializable;
+
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author Vishrant Gupta
  *
  */
+@Configuration
+public class ChatbotConfig implements Cloneable, Serializable {
 
-@Table
-public class AIMLModel {
-
-	@PrimaryKey
-	private int id;
+	private static final long serialVersionUID = -4426669207348680205L;
 	
-	private Category category;
+	private static volatile ChatbotConfig INSTANCE = new ChatbotConfig();
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (this.getClass() != obj.getClass()) {
-			return false;
-		}
-		AIMLModel other = (AIMLModel) obj;
-		if (this.category == null) {
-			if (other.category != null) {
-				return false;
+	private ChatbotConfig() {
+	}
+
+	public ChatbotConfig getInstance() {
+		if (INSTANCE == null) {
+			synchronized (ChatbotConfig.class) {
+				if (INSTANCE == null) {
+					INSTANCE = new ChatbotConfig();
+				}
 			}
-		} else if (!this.category.equals(other.category)) {
-			return false;
 		}
-		return true;
-	}
-
-	public Category getCategory() {
-		return this.category;
+		return INSTANCE;
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((this.category == null) ? 0 : this.category.hashCode());
-		return result;
+	protected Object clone() throws CloneNotSupportedException {
+		throw new CloneNotSupportedException();
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	@Override
-	public String toString() {
-		return "AIML [category=" + this.category + "]";
+	public Object readResolve() {
+		return INSTANCE;
 	}
 
 }

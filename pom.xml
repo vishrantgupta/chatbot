@@ -54,17 +54,6 @@
 			<artifactId>spring-data-cassandra</artifactId>
 		</dependency>
 
-		<!-- <dependency> <groupId>org.cassandraunit</groupId> <artifactId>cassandra-unit-spring</artifactId> 
-			<version>${cassandra.version}</version> <scope>test</scope> <exclusions> 
-			<exclusion> <groupId>org.cassandraunit</groupId> <artifactId>cassandra-unit</artifactId> 
-			</exclusion> </exclusions> </dependency> <dependency> <groupId>org.cassandraunit</groupId> 
-			<artifactId>cassandra-unit-shaded</artifactId> <version>${cassandra.version}</version> 
-			<scope>test</scope> </dependency> <dependency> <groupId>org.hectorclient</groupId> 
-			<artifactId>hector-core</artifactId> <version>${hector.version}</version> 
-			</dependency> -->
-		<!-- embedded cassandra dependency ends -->
-
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -103,6 +92,30 @@
 						</manifest>
 					</archive>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.alicebot.ab</groupId>
+									<artifactId>ab</artifactId>
+									<version>${alicebot.version}</version>
+									<outputDirectory>${project.build.directory}/lib</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+							<!-- other configurations here -->
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

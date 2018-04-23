@@ -24,8 +24,11 @@
  */
 package info.vishrantgupta.chatbot.controller;
 
+import info.vishrantgupta.chatbot.conf.ChatbotConfig;
 import info.vishrantgupta.chatbot.model.AIMLModel;
+import info.vishrantgupta.chatbot.service.TrainingDataService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,12 +42,21 @@ import org.springframework.web.bind.annotation.RestController;
 // @RequestMapping(value="/bot")
 public class ChatbotController {
 
+	@Autowired
+	private ChatbotConfig chatbotConfig;
+
+	@Autowired
+	private TrainingDataService trainingDataService;
+
 	@RequestMapping(value = "train")
 	public void trainChatbot(
 			@RequestParam(required = true, defaultValue = "{}") AIMLModel trainData) {
 
 		if (trainData != null) {
-
+			AIMLModel model = trainingDataService.save(trainData);
+			
+			
+			
 		}
 
 	}
